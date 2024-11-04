@@ -1,9 +1,16 @@
 from rest_framework import viewsets
 
 from cinema.models import Movie, CinemaHall, Genre, Actor, MovieSession
-from cinema.serializers import MovieSerializer, CinemaHallSerializer, GenreSerializer, ActorSerializer, \
-    MovieListSerializer, MovieRetrieveSerializer, \
-    MovieSessionListSerializer, MovieSessionSerializer, MovieSessionRetrieveSerializer
+from cinema.serializers import (MovieSerializer,
+                                CinemaHallSerializer,
+                                GenreSerializer,
+                                ActorSerializer,
+                                MovieListSerializer,
+                                MovieRetrieveSerializer,
+                                MovieSessionListSerializer,
+                                MovieSessionSerializer,
+                                MovieSessionRetrieveSerializer
+                                )
 
 
 class MovieViewSet(viewsets.ModelViewSet):
@@ -11,17 +18,17 @@ class MovieViewSet(viewsets.ModelViewSet):
     serializer_class = MovieListSerializer
 
     def get_serializer_class(self):
-        if self.action == 'list':
+        if self.action == "list":
             return MovieListSerializer
-        elif self.action == 'retrieve':
+        elif self.action == "retrieve":
             return MovieRetrieveSerializer
 
         return MovieSerializer
 
     def get_queryset(self):
         queryset = self.queryset
-        if self.action == 'list':
-            return queryset.prefetch_related('genres')
+        if self.action == "list":
+            return queryset.prefetch_related("genres")
 
         return queryset
 
@@ -45,8 +52,8 @@ class MovieSessionViewSet(viewsets.ModelViewSet):
     queryset = MovieSession.objects.all()
 
     def get_serializer_class(self):
-        if self.action == 'list':
+        if self.action == "list":
             return MovieSessionListSerializer
-        elif self.action == 'retrieve':
+        elif self.action == "retrieve":
             return MovieSessionRetrieveSerializer
         return MovieSessionSerializer

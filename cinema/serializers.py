@@ -24,12 +24,26 @@ class ActorSerializer(serializers.ModelSerializer):
 class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ["title", "description", "duration", "genres", "actors"]
+        fields = [
+            "title",
+            "description",
+            "duration",
+            "genres",
+            "actors"
+        ]
 
 
 class MovieListSerializer(MovieSerializer):
-    genres = serializers.SlugRelatedField(many=True, read_only=True, slug_field="name")
-    actors = serializers.SlugRelatedField(many=True, read_only=True, slug_field="full_name")
+    genres = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field="name"
+    )
+    actors = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field="full_name"
+    )
 
 
 class MovieRetrieveSerializer(MovieSerializer):
@@ -44,13 +58,25 @@ class MovieSessionSerializer(serializers.ModelSerializer):
 
 
 class MovieSessionListSerializer(serializers.ModelSerializer):
-    movie_title = serializers.CharField(source='movie.title', read_only=True)
-    cinema_hall_name = serializers.CharField(source='cinema_hall.name', read_only=True)
-    cinema_hall_capacity = serializers.IntegerField(source='cinema_hall.capacity', read_only=True)
+    movie_title = serializers.CharField(source="movie.title", read_only=True)
+    cinema_hall_name = serializers.CharField(
+        source="cinema_hall.name",
+        read_only=True
+    )
+    cinema_hall_capacity = serializers.IntegerField(
+        source="cinema_hall.capacity",
+        read_only=True
+    )
 
     class Meta:
         model = MovieSession
-        fields = ["id", "show_time", "movie_title", "cinema_hall_name", "cinema_hall_capacity"]
+        fields = [
+            "id",
+            "show_time",
+            "movie_title",
+            "cinema_hall_name",
+            "cinema_hall_capacity"
+        ]
 
 
 class MovieSessionRetrieveSerializer(serializers.ModelSerializer):
